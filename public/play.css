@@ -1,0 +1,56 @@
+#game_frame {
+  display: block;
+  width: 100%;
+  height: 480px;
+  margin: 0 auto;
+}
+
+#chatbox {
+  height: 617px;
+}
+
+#messages {
+  margin-right: 1px;
+  width: 283px;
+  height: 70%;
+  border: 2px solid black;
+  overflow-y: auto;
+}
+
+#chatInputContainer {
+  width: auto;
+  height: 26px;
+  margin-right: 1px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+
+#chatInput {
+  width: -webkit-calc(100% - 7px);
+  width:    -moz-calc(100% - 7px);
+  width:         calc(100% - 7px);
+  height: 26px;
+  border: 1px solid black;
+}
+
+#enterNameContainer {
+  margin-right: 1px;
+  width: auto;
+  height: auto;
+  border: 2px solid black;
+}
+
+.message {
+  word-wrap: break-word;
+  border: 1px solid #b0b0b0;
+}
+
+table, tr, td {
+  border: 1px solid black;
+}
+
+table {
+  width: 1000px;
+  margin: 0 auto;
+  height: 623px;
+}
