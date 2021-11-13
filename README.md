@@ -21,3 +21,6 @@ go build
 3) Put the game files in public/play/gamesdefault
 4) Run gencache in public/play/gamesdefault (can be found here https://easyrpg.org/player/guide/webplayer/)
 5) Run orbs (or push to heroku)
+
+## Credits
+Based on https://github.com/gorilla/websocket/tree/master/examples/chat
