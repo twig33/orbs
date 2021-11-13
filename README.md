@@ -6,6 +6,7 @@ Change the number of rooms in main.go:
 ```
 NUM_ROOMS = 180 //!!! change this if not hosting yume nikki
 ```
+Set the PORT environment variable. If you don't, it defaults to 8080.
 
 ## Building
 ```
