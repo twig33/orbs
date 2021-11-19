@@ -33,18 +33,18 @@ html {
 }
 
 #messages::-webkit-scrollbar-track {
-    border: 8px solid transparent;
-	border-image: url(images/ui/border.png) 8 repeat !important;
-	background-color: rgba(45, 17, 23, 1);
-	image-rendering: crisp-edges;
-	image-rendering: pixelated;
+  border: 8px solid transparent;
+  border-image: url(images/ui/border.png) 8 repeat !important;
+  background-color: rgba(45, 17, 23, 1);
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 #messages::-webkit-scrollbar-thumb {
-    border: 8px solid transparent;
-	border-image: url(images/ui/border.png) 6 round !important;
-	image-rendering: crisp-edges;
-	image-rendering: pixelated;
+  border: 8px solid transparent;
+  border-image: url(images/ui/border.png) 6 round !important;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 #chatInputContainer {
