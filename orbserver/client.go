@@ -41,17 +41,17 @@ type Client struct {
 	// Buffered channel of outbound messages.
 	send chan []byte
 
-	id int
-	x, y int
-	spd int
-	name string
-	
-	spriteName string
+	id      int
+	x, y, f int
+	spd     int
+	name    string
+
+	spriteName  string
 	spriteIndex int
 }
 
 type Message struct {
-	data []byte
+	data   []byte
 	sender *Client //who sent the message
 }
 
