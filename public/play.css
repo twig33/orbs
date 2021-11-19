@@ -1,5 +1,11 @@
+@font-face {
+  font-family: 'Gothic';
+  src: url('fonts/ms-gothic.woff2') format('woff2'),
+       url('fonts/ms-gothic.woff') format('woff');
+}
+
 html {
-  font-family: 'MS Gothic';
+  font-family: 'MS Gothic', 'Gothic';
   font-size: 16px;
   color: rgba(216, 216, 216, 1);
   background: url(images/ui/containerbg.png) !important;
