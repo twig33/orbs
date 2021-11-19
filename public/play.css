@@ -49,16 +49,16 @@ html {
 
 #chatInputContainer {
   width: auto;
-  height: 26px;
+  height: 36px;
   margin-right: 1px;
   margin-top: 2px;
   margin-bottom: 5px;
 }
 
 #chatInput {
-  width: -webkit-calc(100% - 7px);
-  width:    -moz-calc(100% - 7px);
-  width:         calc(100% - 7px);
+  width: -webkit-calc(100% - 11px);
+  width:    -moz-calc(100% - 11px);
+  width:         calc(100% - 11px);
   height: 26px;
 }
 
@@ -68,14 +68,17 @@ html {
   height: auto;
 }
 
-.message {
-  border-bottom: 4px solid transparent;
-  border-image: url(images/ui/border.png) 4 repeat !important;
+#enterNameInstruction, .message {
   background-image: url(images/ui/font1.png) !important;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(1.5px 1.5px black);
+}
+
+.message {
+  border-bottom: 4px solid transparent;
+  border-image: url(images/ui/border.png) 8 repeat !important;
   word-wrap: break-word;
 }
 
@@ -97,7 +100,9 @@ table {
 }
 
 input[type='text'] {
-  border: none;
+  border: 4px solid transparent;
+  border-image: url(images/ui/border.png) 8 repeat !important;
+  color: white;
   background-color: transparent;
   text-shadow: 1.5px 1.5px black;
 }
