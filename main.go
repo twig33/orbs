@@ -58,12 +58,24 @@ func main() {
 		go hub.Run()
 	}
 
-	//http.Handle("/", httpfileserver.New("/", "public/"))
+	http.HandleFunc("/index.wasm", HandlerWasm)
+	http.HandleFunc("/index.js", HandlerJs)
+	http.HandleFunc("/play.html", HandlerPlay)
 	http.Handle("/", http.FileServer(http.Dir("public/")))
-	//http.HandleFunc("/", Handler)
 	log.Fatal(http.ListenAndServe(":" + port, nil))
 }
 
-/*func Handler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "index.html")
-}*/
+func HandlerWasm(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "no-store, must-revalidate")
+	http.ServeFile(w, r, "public/index.wasm")
+}
+
+func HandlerJs(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "no-store, must-revalidate")
+	http.ServeFile(w, r, "public/index.js")
+}
+
+func HandlerPlay(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "no-store, must-revalidate")
+	http.ServeFile(w, r, "public/play.html")
+}
