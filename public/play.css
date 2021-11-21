@@ -82,7 +82,7 @@ html {
   filter: drop-shadow(1.5px 1.5px black);
 }
 
-.message {
+.messageContainer {
   border-bottom: 4px solid transparent;
   border-image: url(images/ui/border.png) 8 repeat !important;
   word-wrap: break-word;

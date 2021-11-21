@@ -7,9 +7,13 @@ function chatboxAddMessage(msg) {
   scroll = (messages.scrollHeight - messages.scrollTop === messages.clientHeight)
 
   msgContainer = document.createElement("div")
-  msgContainer.classList.add("message")
-  msgContainer.appendChild(document.createTextNode(msg))
-
+  msgContainer.classList.add("messageContainer")
+  
+  msg = document.createElement("span")
+  msg.classList.add("message")
+  
+  msg.appendChild(document.createTextNode(msg))
+  msgContainer.appendChild(msg)
   messages.appendChild(msgContainer)
 
   if (scroll) {
