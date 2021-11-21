@@ -94,7 +94,8 @@ tr, td, div, input[type='text'] {
 }
 
 tr, td {
-  background: url(images/ui/containerbg.png) !important;
+  background-size: 70px;
+  background-image: url(images/ui/containerbg.png) !important;
   border-image: url(images/ui/border.png) 10 repeat !important;
   border: 24px solid transparent;
 }
