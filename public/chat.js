@@ -9,11 +9,11 @@ function chatboxAddMessage(msg) {
   msgContainer = document.createElement("div")
   msgContainer.classList.add("messageContainer")
   
-  msg = document.createElement("span")
-  msg.classList.add("message")
+  message = document.createElement("span")
+  message.classList.add("message")
   
-  msg.appendChild(document.createTextNode(msg))
-  msgContainer.appendChild(msg)
+  message.appendChild(document.createTextNode(msg))
+  msgContainer.appendChild(message)
   messages.appendChild(msgContainer)
 
   if (scroll) {
