@@ -36,7 +36,8 @@ function chatNameCheck() {
   if (nameInput.value == "") return;
   if (!(/^[A-Za-z0-9]+$/.test(nameInput.value))) return;
   document.getElementById("enterNameContainer").style.display = 'none';
-  document.getElementById("chatInput").disabled = false
+  document.getElementById("messages").classList.add("expanded");
+  document.getElementById("chatInput").disabled = false;
   nameInput = document.getElementById("nameInput")
   ptr = Module.allocate(Module.intArrayFromString(nameInput.value), Module.ALLOC_NORMAL)
   Module._ChangeName(ptr)

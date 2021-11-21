@@ -24,14 +24,21 @@ html {
 
 #messages, #chatInputContainer, #enterNameContainer {
   border: 8px solid transparent;
+}
+
+#messages, #enterNameContainer {
   border-image: url(images/ui/border.png) 10 repeat !important;
 }
 
 #messages {
   margin-right: 1px;
   width: 283px;
-  height: 70%;
+  height: calc(100% - (222px));
   overflow-y: auto;
+}
+
+#messages.expanded {
+  height: calc(100% - (82px));
 }
 
 #messages::-webkit-scrollbar {
@@ -55,10 +62,9 @@ html {
 
 #chatInputContainer {
   width: auto;
-  height: 36px;
+  height: 48px;
   margin-right: 1px;
   margin-top: 2px;
-  margin-bottom: 5px;
 }
 
 #chatInput {
@@ -66,12 +72,18 @@ html {
   width:    -moz-calc(100% - 11px);
   width:         calc(100% - 11px);
   height: 26px;
+  right: 8px;
 }
 
 #enterNameContainer {
+  margin-top: 5px;
   margin-right: 1px;
   width: auto;
   height: auto;
+}
+
+#nameInput {
+	width: calc(100% - 28px);
 }
 
 #enterNameInstruction, .message {
@@ -107,9 +119,10 @@ table {
 }
 
 input[type='text'] {
-  border: 4px solid transparent;
+  border: 12px solid transparent;
   border-image: url(images/ui/border.png) 8 repeat !important;
   color: white;
-  background-color: transparent;
+  background-color: #ffffff10;
   text-shadow: 1.5px 1.5px black;
+  position: relative;
 }
