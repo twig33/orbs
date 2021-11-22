@@ -5,10 +5,13 @@
 }
 
 html {
-  font-family: 'MS Gothic', 'Gothic';
-  font-size: 16px;
   color: rgba(216, 216, 216, 1);
   background-color: black;
+}
+
+html, input[type='text'] {
+  font-family: 'MS Gothic', 'Gothic';
+  font-size: 16px;
 }
 
 #game_frame {
