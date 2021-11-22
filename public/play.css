@@ -83,7 +83,7 @@ html {
 }
 
 #nameInput {
-	width: calc(100% - 28px);
+  width: calc(100% - 28px);
 }
 
 #enterNameInstruction, .message {
