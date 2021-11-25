@@ -5,18 +5,18 @@
 package orbserver
 
 import (
-	"net/http"
+	"errors"
 	"log"
+	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
-	"regexp"
-	"errors"
 
 	"github.com/gorilla/websocket"
 )
 
 var (
-	maxID = 512
+	maxID    = 512
 	upgrader = websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
@@ -24,8 +24,8 @@ var (
 			return true
 		},
 	}
-	isOkName = regexp.MustCompile("^[A-Za-z0-9]+$").MatchString
-	delimstr = "\uffff"
+	isOkName  = regexp.MustCompile("^[A-Za-z0-9]+$").MatchString
+	delimstr  = "\uffff"
 	delimrune = '\uffff'
 )
 
@@ -48,24 +48,24 @@ type Hub struct {
 	unregister chan *Client
 
 	roomName string
-	//list of valid game character sprite resource keys 
+	//list of valid game character sprite resource keys
 	spriteNames []string
 }
 
 func NewHub(roomName string, spriteNames []string) *Hub {
 	return &Hub{
-		processMsgCh:  make(chan *Message),
-		connect:   make(chan *websocket.Conn),
-		unregister: make(chan *Client),
-		clients:    make(map[*Client]bool),
-		id: make(map[int]bool),
-		roomName: roomName,
-		spriteNames: spriteNames,
+		processMsgCh: make(chan *Message),
+		connect:      make(chan *websocket.Conn),
+		unregister:   make(chan *Client),
+		clients:      make(map[*Client]bool),
+		id:           make(map[int]bool),
+		roomName:     roomName,
+		spriteNames:  spriteNames,
 	}
 }
 
 func (h *Hub) Run() {
-	http.HandleFunc("/" + h.roomName, h.serveWs)
+	http.HandleFunc("/"+h.roomName, h.serveWs)
 	for {
 		select {
 		case conn := <-h.connect:
@@ -85,10 +85,10 @@ func (h *Hub) Run() {
 			//send the new client info about the game state
 			for other_client := range h.clients {
 				client.send <- []byte("c" + delimstr + strconv.Itoa(other_client.id))
-				client.send <- []byte("m" + delimstr + strconv.Itoa(other_client.id) + delimstr + strconv.Itoa(other_client.x) + delimstr + strconv.Itoa(other_client.y));
-				client.send <- []byte("spd" + delimstr + strconv.Itoa(other_client.id) + delimstr + strconv.Itoa(other_client.spd));
+				client.send <- []byte("m" + delimstr + strconv.Itoa(other_client.id) + delimstr + strconv.Itoa(other_client.x) + delimstr + strconv.Itoa(other_client.y) + delimstr + strconv.Itoa(other_client.f))
+				client.send <- []byte("spd" + delimstr + strconv.Itoa(other_client.id) + delimstr + strconv.Itoa(other_client.spd))
 				if other_client.spriteIndex >= 0 { //if the other client sent us valid sprite and index before
-					client.send <- []byte("spr" + delimstr + strconv.Itoa(other_client.id) + delimstr + other_client.spriteName + delimstr + strconv.Itoa(other_client.spriteIndex));
+					client.send <- []byte("spr" + delimstr + strconv.Itoa(other_client.id) + delimstr + other_client.spriteName + delimstr + strconv.Itoa(other_client.spriteIndex))
 				}
 			}
 			//register client in the structures
@@ -145,8 +145,8 @@ func (h *Hub) processMsg(msg *Message) error {
 	}) //split message string on delimiting character
 
 	switch msgFields[0] {
-	case "m": //"i moved to x y"
-		if len(msgFields) != 3 {
+	case "m": //"i moved to x y facing"
+		if len(msgFields) != 4 {
 			return err
 		}
 		//check if the coordinates are valid
@@ -154,13 +154,18 @@ func (h *Hub) processMsg(msg *Message) error {
 		if errconv != nil {
 			return err
 		}
-		y, errconv := strconv.Atoi(msgFields[2]);
+		y, errconv := strconv.Atoi(msgFields[2])
+		if errconv != nil {
+			return err
+		}
+		f, errconv := strconv.Atoi(msgFields[3])
 		if errconv != nil {
 			return err
 		}
 		msg.sender.x = x
 		msg.sender.y = y
-		h.broadcast([]byte("m" + delimstr + strconv.Itoa(msg.sender.id) + delimstr + msgFields[1] + delimstr + msgFields[2])) //user %id% moved to x y
+		msg.sender.f = f
+		h.broadcast([]byte("m" + delimstr + strconv.Itoa(msg.sender.id) + delimstr + msgFields[1] + delimstr + msgFields[2] + delimstr + msgFields[3])) //user %id% moved to x y
 	case "spd": //change my speed to spd
 		if len(msgFields) != 2 {
 			return err
@@ -170,10 +175,10 @@ func (h *Hub) processMsg(msg *Message) error {
 			return err
 		}
 		if spd < 0 || spd > 10 { //something's not right
-			return err	
+			return err
 		}
 		msg.sender.spd = spd
-		h.broadcast([]byte("spd" + delimstr + strconv.Itoa(msg.sender.id) + delimstr + msgFields[1]));
+		h.broadcast([]byte("spd" + delimstr + strconv.Itoa(msg.sender.id) + delimstr + msgFields[1]))
 	case "spr": //change my sprite
 		if len(msgFields) != 3 {
 			return err
@@ -187,7 +192,7 @@ func (h *Hub) processMsg(msg *Message) error {
 		}
 		msg.sender.spriteName = msgFields[1]
 		msg.sender.spriteIndex = index
-		h.broadcast([]byte("spr" + delimstr + strconv.Itoa(msg.sender.id) + delimstr + msgFields[1] + delimstr + msgFields[2]));
+		h.broadcast([]byte("spr" + delimstr + strconv.Itoa(msg.sender.id) + delimstr + msgFields[1] + delimstr + msgFields[2]))
 	case "say":
 		if len(msgFields) != 2 {
 			return err
