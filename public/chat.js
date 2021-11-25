@@ -1,55 +1,55 @@
-Module['onRuntimeInitialized'] = ChatInit
-ENV.SDL_EMSCRIPTEN_KEYBOARD_ELEMENT = "#canvas"
+Module['onRuntimeInitialized'] = initChat;
+ENV.SDL_EMSCRIPTEN_KEYBOARD_ELEMENT = "#canvas";
 
 function chatboxAddMessage(msg) {
-  messages = document.getElementById("messages")
+  const messages = document.getElementById("messages");
   
-  scroll = (messages.scrollHeight - messages.scrollTop === messages.clientHeight)
+  const shouldScroll = Math.abs((messages.scrollHeight - messages.scrollTop) - messages.clientHeight) <= 20;
 
-  msgContainer = document.createElement("div")
-  msgContainer.classList.add("messageContainer")
+  const msgContainer = document.createElement("div");
+  msgContainer.classList.add("messageContainer");
   
-  message = document.createElement("span")
-  message.classList.add("message")
+  const message = document.createElement("span");
+  message.classList.add("message");
   
-  message.appendChild(document.createTextNode(msg))
-  msgContainer.appendChild(message)
-  messages.appendChild(msgContainer)
+  message.appendChild(document.createTextNode(msg));
+  msgContainer.appendChild(message);
+  messages.appendChild(msgContainer);
 
-  if (scroll) {
-    messages.scrollTop = messages.scrollHeight
+  if (shouldScroll) {
+    messages.scrollTop = messages.scrollHeight;
   }
 }
 
 function chatInputActionFired() {
+  const chatInput = document.getElementById("chatInput")
   if (chatInput.value === "") {
     return
   }
-  chatInput = document.getElementById("chatInput")
-  ptr = Module.allocate(Module.intArrayFromString(chatInput.value), Module.ALLOC_NORMAL)
-  Module._SendChatMessageToServer(ptr)
-  Module._free(ptr)
-  chatInput.value = ""
+  const ptr = Module.allocate(Module.intArrayFromString(chatInput.value), Module.ALLOC_NORMAL);
+  Module._SendChatMessageToServer(ptr);
+  Module._free(ptr);
+  chatInput.value = "";
 }
 
 function chatNameCheck() {
+  const nameInput = document.getElementById("nameInput");
   if (nameInput.value == "") return;
   if (!(/^[A-Za-z0-9]+$/.test(nameInput.value))) return;
-  document.getElementById("enterNameContainer").style.display = 'none';
-  document.getElementById("messages").classList.add("expanded");
+  document.getElementById("enterNameContainer").style.display = "none";
   document.getElementById("chatInput").disabled = false;
-  nameInput = document.getElementById("nameInput")
-  ptr = Module.allocate(Module.intArrayFromString(nameInput.value), Module.ALLOC_NORMAL)
-  Module._ChangeName(ptr)
-  Module._free(ptr)
-  nameInput.value = ""
+  document.getElementById("chatInputContainer").style.display = "block";
+  ptr = Module.allocate(Module.intArrayFromString(nameInput.value), Module.ALLOC_NORMAL);
+  Module._ChangeName(ptr);
+  Module._free(ptr);
+  nameInput.value = "";
 }
 
-function ChatInit() {
-  document.getElementById("chatbox").style.display = 'block'
+function initChat() {
+  document.getElementById("chatboxContainer").style.display = "table-cell";
 }
 
 //called from easyrpg player
 function GotChatMsg(msg) {
-  chatboxAddMessage(msg)
+  chatboxAddMessage(msg);
 }

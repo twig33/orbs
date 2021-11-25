@@ -1,16 +1,11 @@
 @font-face {
-  font-family: 'Gothic';
-  src: url('fonts/ms-gothic.woff2') format('woff2'),
-       url('fonts/ms-gothic.woff') format('woff');
+  font-family: 'PGothic';
+  src: url('fonts/ms-pgothic.woff2') format('woff2'),
+       url('fonts/ms-pgothic.woff') format('woff');
 }
 
-html {
-  color: rgba(216, 216, 216, 1);
-  background-color: black;
-}
-
-html, input[type='text'] {
-  font-family: 'MS Gothic', 'Gothic';
+html, input[type='text'], select {
+  font-family: 'MS PGothic', 'PGothic';
   font-size: 16px;
 }
 
@@ -21,98 +16,75 @@ html, input[type='text'] {
   margin: 0 auto;
 }
 
-#chatbox {
+#uiControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#chatboxContainer {
+  width: 300px;
   height: 617px;
 }
 
-#messages, #chatInputContainer, #enterNameContainer {
-  border: 8px solid transparent;
-}
-
-#messages, #enterNameContainer {
-  border-image: url(images/ui/border.png) 10 repeat !important;
+#chatbox {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 617px;
 }
 
 #messages {
-  margin-right: 1px;
-  width: 283px;
-  height: calc(100% - (222px));
+  width: 284px;
+  height: 100%;
   overflow-y: auto;
-}
-
-#messages.expanded {
-  height: calc(100% - (82px));
 }
 
 #messages::-webkit-scrollbar {
   width: 18px;
 }
 
-#messages::-webkit-scrollbar-track {
-  border: 8px solid transparent;
-  border-image: url(images/ui/border.png) 8 repeat !important;
-  background-color: rgba(45, 17, 23, 1);
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
-}
-
-#messages::-webkit-scrollbar-thumb {
-  border: 8px solid transparent;
-  border-image: url(images/ui/border.png) 6 round !important;
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
-}
-
 #chatInputContainer {
   width: auto;
   height: 48px;
-  margin-right: 1px;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 #chatInput {
   width: -webkit-calc(100% - 11px);
   width:    -moz-calc(100% - 11px);
   width:         calc(100% - 11px);
-  height: 26px;
   right: 8px;
 }
 
 #enterNameContainer {
-  margin-top: 5px;
-  margin-right: 1px;
+  margin-top: 12px;
   width: auto;
   height: auto;
+}
+
+#enterNameForm {
+  margin-top: 8px;
+}
+
+#enterNameInstruction span {
+  letter-spacing: -0.675px;
 }
 
 #nameInput {
   width: calc(100% - 28px);
 }
 
-#enterNameInstruction, .message {
-  background-image: url(images/ui/font1.png) !important;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(1.5px 1.5px black);
+.instruction {
+  text-align: center;
 }
 
 .messageContainer {
-  border-bottom: 4px solid transparent;
-  border-image: url(images/ui/border.png) 8 repeat !important;
   word-wrap: break-word;
 }
 
-tr, td, div, input[type='text'] {
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
-}
-
-tr, td {
-  background-size: 70px;
-  background-image: url(images/ui/containerbg.png) !important;
-  border-image: url(images/ui/border.png) 10 repeat !important;
-  border: 24px solid transparent;
+label {
+  font-weight: bold;
 }
 
 table {
@@ -121,11 +93,6 @@ table {
   height: 623px;
 }
 
-input[type='text'] {
-  border: 12px solid transparent;
-  border-image: url(images/ui/border.png) 8 repeat !important;
-  color: white;
-  background-color: #ffffff10;
-  text-shadow: 1.5px 1.5px black;
+input[type='text'], select {
   position: relative;
 }
